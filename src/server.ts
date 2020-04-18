@@ -1,3 +1,10 @@
+import "reflect-metadata";
+import {createConnection} from "typeorm";
+
+createConnection().then(connection => {
+  console.log(connection)
+}).catch(error => console.log(error));;
+
 import express from 'express';
 
 import routes from './routes'
