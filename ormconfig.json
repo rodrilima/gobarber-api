@@ -1,9 +1,9 @@
 {
   "type": "postgres",
-  "host": "10.23.157.35",
+  "host": "localhost",
   "port": 5432,
   "username": "postgres",
-  "password": "test",
+  "password": "docker",
   "database": "postgres",
   "entities": [
      "src/models/*.ts"

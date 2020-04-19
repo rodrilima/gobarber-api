@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd --transpileOnly src/server.ts",
+    "dev:server": "tsnd --transpileOnly src/server.ts",
     "build": "tsc"
   },
   "dependencies": {
