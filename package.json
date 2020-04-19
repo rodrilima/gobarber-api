@@ -4,8 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev:server": "tsnd --transpileOnly src/server.ts",
-    "build": "tsc"
+    "dev:server": "tsnd --transpileOnly --inspect -- src/server.ts",
+    "build": "tsc",
+    "typeorm": "tsnd ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "date-fns": "^2.12.0",
