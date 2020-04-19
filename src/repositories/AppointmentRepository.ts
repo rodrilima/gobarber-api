@@ -5,7 +5,6 @@ import { EntityRepository, Repository } from 'typeorm'
 class AppointmentsRepository extends Repository<Appointment> {
   public async findByDate(date: Date): Promise<Appointment | null> {
     const appointment = await this.findOne({ where: { date } })
-
     return appointment || null
   }
 }
