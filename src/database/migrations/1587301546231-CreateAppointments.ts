@@ -15,7 +15,7 @@ export default class CreateAppointments1587301546231 implements MigrationInterfa
           },
           {
             name: "provider_id",
-            type: "varchar",
+            type: "uuid",
             isNullable: true
           },
           {
@@ -35,22 +35,9 @@ export default class CreateAppointments1587301546231 implements MigrationInterfa
         ]
       })
     )
-
-    await queryRunner.createForeignKey(
-      "appointments",
-      new TableForeignKey({
-        name: "set_user_to_provider",
-        columnNames: ["provider_id"],
-        referencedTableName: "users",
-        referencedColumnNames: ["id"],
-        onDelete: "SET NULL",
-        onUpdate: "CASCADE"
-      })
-    )
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey("appointments", "set_user_to_provider")
     await queryRunner.dropTable("appointments")
   }
 
