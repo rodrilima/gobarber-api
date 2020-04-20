@@ -18,15 +18,11 @@ usersRouter.get('/', async (request, response) => {
 })
 
 usersRouter.post('/', async (request, response) => {
-  try {
-    const { name, email, password } = request.body;
-    const createUserService = new CreateUserService();
-    const user = await createUserService.execute({ name, email, password });
-    delete user.password;
-    return response.json(user);
-  } catch({ message }) {
-    return response.status(406).json({ error: message })
-  }
+  const { name, email, password } = request.body;
+  const createUserService = new CreateUserService();
+  const user = await createUserService.execute({ name, email, password });
+  delete user.password;
+  return response.json(user);
 })
 
 usersRouter.delete('/:id', async (request, response) => {
@@ -41,17 +37,13 @@ usersRouter.patch(
   ensureAuthenticated,
   upload.single('avatar'),
   async (request, response) => {
-    try {
-      const updateUserAvatar = new UpdateUserAvatarService();
-      const user = await updateUserAvatar.execute({
-        user_id: request.user.id,
-        avatarFilename: request.file.filename
-      })
-      delete user.password;
-      response.json(user)
-    } catch ({ message }) {
-      return response.status(400).json({ error: message })
-    }
+    const updateUserAvatar = new UpdateUserAvatarService();
+    const user = await updateUserAvatar.execute({
+      user_id: request.user.id,
+      avatarFilename: request.file.filename
+    })
+    delete user.password;
+    response.json(user)
 })
 
 export default usersRouter;
