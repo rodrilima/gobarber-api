@@ -1,11 +1,12 @@
 import { Router } from 'express';
 import { getRepository } from 'typeorm';
+import { container } from 'tsyringe';
 import multer from 'multer';
-import uploadConfig from '../config/upload';
+import uploadConfig from '@config/upload';
 
-import CreateUserService from '../services/CreateUserService';
-import UpdateUserAvatarService from '../services/UpdateUserAvatarService';
-import User from '../models/User';
+import CreateUserService from '@modules/users/services/CreateUserService';
+import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
+import User from '@modules/users/infra/typeorm/entities/User';
 import ensureAuthenticated from '../middlewares/ensureAuthenticated';
 
 const usersRouter = Router();
@@ -19,7 +20,7 @@ usersRouter.get('/', async (request, response) => {
 
 usersRouter.post('/', async (request, response) => {
   const { name, email, password } = request.body;
-  const createUserService = new CreateUserService();
+  const createUserService = container.resolve(CreateUserService);
   const user = await createUserService.execute({ name, email, password });
   delete user.password;
   return response.json(user);
@@ -37,7 +38,7 @@ usersRouter.patch(
   ensureAuthenticated,
   upload.single('avatar'),
   async (request, response) => {
-    const updateUserAvatar = new UpdateUserAvatarService();
+    const updateUserAvatar = container.resolve(UpdateUserAvatarService);
     const user = await updateUserAvatar.execute({
       user_id: request.user.id,
       avatarFilename: request.file.filename

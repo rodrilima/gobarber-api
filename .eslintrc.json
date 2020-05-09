@@ -1,10 +1,13 @@
 {
     "env": {
         "es6": true,
-        "node": true
+        "node": true,
+        "commonjs": true
     },
     "extends": [
-        "airbnb-base"
+        "airbnb-base",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended"
     ],
     "globals": {
         "Atomics": "readonly",
@@ -19,5 +22,21 @@
         "@typescript-eslint"
     ],
     "rules": {
+      "no-underscore-dangle": "off",
+      "prettier/prettier": "error",
+      "class-methods-use-this": "off",
+      "no-useless-constructor": "off",
+      "@typescript-eslint/camelcase": "off",
+      "@typescript-eslint/no-unused-vars": ["error", {
+        "argsIgnorePattern": "_"
+      }],
+      "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "always" }],
+      "@import/extension": [
+        "error",
+        "ignorePackages",
+        {
+          "ts": "never"
+        }
+      ]
     }
 }
