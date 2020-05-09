@@ -1,5 +1,4 @@
 import { startOfHour } from 'date-fns';
-import { isUuid } from 'uuidv4';
 import { injectable, inject } from 'tsyringe'
 
 import ICreateAppointmentService from './ICreateAppointmentService';
@@ -16,7 +15,6 @@ class CreateAppointmentService {
   ){}
 
   public async execute({ date, provider_id }: ICreateAppointmentService): Promise<Appointment> {
-    if(!isUuid(provider_id)) throw Error('This provider_id is not valid')
     const appointmentDate = startOfHour(date);
     const findAppointmentInSameDate = await this.appointmentRepository.findByDate(appointmentDate);
     if (findAppointmentInSameDate) throw new AppError('This appointment is already booked');

@@ -7,6 +7,7 @@ import uploadConfig from '@config/upload';
 import User from '../infra/typeorm/entities/User';
 
 import IUsersRepository from '../repositories/IUsersRepository'
+import IStorageProvider from '@shared/container/providers/StorageProvider/models/IStorageProvider';
 
 interface Request {
   user_id: string;
@@ -17,7 +18,10 @@ interface Request {
 class UpdateUserAvatarService {
   constructor(
     @inject('UsersRepository')
-    private userRepository: IUsersRepository
+    private userRepository: IUsersRepository,
+
+    @inject('StorgeProvider')
+    private storageProvider: IStorageProvider
   ){}
 
   public async execute({ user_id, avatarFilename }: Request): Promise<User> {
@@ -26,15 +30,12 @@ class UpdateUserAvatarService {
     if(!user) throw new AppError('Only autheticated users can be update avatar.', 401)
 
     if(user.avatar) {
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-
-      if(userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath);
-      }
+      await this.storageProvider.deleteFile(user.avatar)
     }
 
-    user.avatar = avatarFilename;
+    const filename = await this.storageProvider.saveFile(avatarFilename)
+
+    user.avatar = filename;
 
     await this.userRepository.save(user)
 
