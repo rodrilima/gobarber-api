@@ -1,9 +1,9 @@
 import IUsersRepository from '@modules/users/repositories/IUsersRepository'
-import ICreateUserService from '@modules/users/services/ICreateUserService'
+import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO'
 import User from '../../infra/typeorm/entities/User'
 import { uuid } from 'uuidv4';
 
-export default class UserRepository implements IUsersRepository {
+export default class FakeUserRepository implements IUsersRepository {
   private users: User[] = [];
 
   async findByEmail(email: string): Promise<User | undefined> {
@@ -16,7 +16,7 @@ export default class UserRepository implements IUsersRepository {
     return findUser
   }
 
-  async create({ name, email, password }: ICreateUserService): Promise<User> {
+  async create({ name, email, password }: ICreateUserDTO): Promise<User> {
     const user = new User();
     Object.assign(user, { id: uuid(), name, email, password });
     this.users.push(user);

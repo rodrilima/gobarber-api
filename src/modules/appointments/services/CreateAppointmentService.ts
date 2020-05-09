@@ -1,7 +1,7 @@
 import { startOfHour } from 'date-fns';
 import { injectable, inject } from 'tsyringe'
 
-import ICreateAppointmentService from './ICreateAppointmentService';
+import ICreateAppointmentDTO from '../dtos/ICreateAppointmentDTO';
 
 import AppError from '@shared/errors/AppError';
 import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
@@ -14,7 +14,7 @@ class CreateAppointmentService {
     private appointmentRepository: IAppointmentsRepository
   ){}
 
-  public async execute({ date, provider_id }: ICreateAppointmentService): Promise<Appointment> {
+  public async execute({ date, provider_id }: ICreateAppointmentDTO): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
     const findAppointmentInSameDate = await this.appointmentRepository.findByDate(appointmentDate);
     if (findAppointmentInSameDate) throw new AppError('This appointment is already booked');

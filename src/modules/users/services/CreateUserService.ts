@@ -2,7 +2,7 @@ import AppError from '@shared/errors/AppError';
 import User from '../infra/typeorm/entities/User';
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 
-import ICreateUserService from './ICreateUserService';
+import ICreateUserDTO from '../dtos/ICreateUserDTO';
 import IUsersRepository from '../repositories/IUsersRepository'
 import { injectable, inject } from 'tsyringe';
 
@@ -15,7 +15,7 @@ class CreateUserService {
     private hashProvider:IHashProvider
   ){}
 
-  public async execute({ name, email, password }: ICreateUserService): Promise<User> {
+  public async execute({ name, email, password }: ICreateUserDTO): Promise<User> {
 
     const checkUserExists = await this.usersRepository.findByEmail(email)
 

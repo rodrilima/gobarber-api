@@ -2,7 +2,7 @@ import { uuid } from 'uuidv4'
 import { isEqual } from 'date-fns';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
-import ICreateAppointmentService from '@modules/appointments/services/ICreateAppointmentService'
+import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO'
 
 import Appointment from '../../infra/typeorm/entities/Appointment';
 
@@ -16,7 +16,7 @@ class AppointmentsRepository implements IAppointmentsRepository {
     return findAppointment;
   }
 
-  public async create({ provider_id, date }:ICreateAppointmentService): Promise<Appointment> {
+  public async create({ provider_id, date }:ICreateAppointmentDTO): Promise<Appointment> {
     const appointment = new Appointment();
 
     Object.assign(appointment, {
