@@ -13,11 +13,11 @@ const upload = multer(uploadConfig);
 const usersController = new UsersController();
 const userAvatarController = new UserAvatarController();
 
-usersRouter.get('/', async (request, response) => usersController.index)
+usersRouter.get('/', usersController.index)
 
-usersRouter.post('/', async (request, response) => usersController.create)
+usersRouter.post('/', usersController.create)
 
-usersRouter.delete('/:id', async (request, response) => usersController.delete)
+usersRouter.delete('/:id', usersController.delete)
 
 usersRouter.patch(
   '/avatar',

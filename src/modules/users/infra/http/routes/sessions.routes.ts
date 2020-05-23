@@ -4,6 +4,6 @@ import SessionsController from '../controllers/SessionsController'
 const sessionsRouter = Router();
 const sessionsController = new SessionsController();
 
-sessionsRouter.post('/', async (request, response) => sessionsController.create)
+sessionsRouter.post('/', sessionsController.create)
 
 export default sessionsRouter;
